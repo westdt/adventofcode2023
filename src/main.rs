@@ -29,5 +29,8 @@ fn read_file(path: &str) -> String {
 }
 
 fn main() {
-    println!("{}", b2::cubes(read_file("input/cubes.txt").as_str()));
+	//println!("Day 1, Part 1: {}", a1::trebuchet(read_file("input/trebuchet.txt").as_str()));
+	//println!("Day 1, Part 2: {}", a2::trebuchet(read_file("input/trebuchet.txt").as_str()));
+	//println!("Day 2, Part 1: {}", b1::cubes(read_file("input/cubes.txt").as_str()));
+    println!("Day 2, Part 2: {}", b2::cubes(read_file("input/cubes.txt").as_str()));
 }
