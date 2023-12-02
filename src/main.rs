@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::{fs, env};
+use std::fs;
 
 mod a1;
 mod a2;
