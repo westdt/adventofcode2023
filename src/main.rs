@@ -1,14 +1,27 @@
+#![allow(dead_code)]
+
 use std::{fs, env};
 
-mod a1_trebuchet;
-mod a2_trebuchet;
+mod a1;
+mod a2;
+mod b1;
+mod b2;
 
-fn get_current_working_dir() -> String {
-    let res = env::current_dir();
-    match res {
-        Ok(path) => path.into_os_string().into_string().unwrap(),
-        Err(_) => "FAILED".to_string()
-    }
+pub fn str_to_lines(input: &str) -> Vec<String> {
+	let mut lines = Vec::new();
+	{
+		let mut current = String::new();
+		for char in input.chars() {
+			if char == '\n' {
+				lines.push(current);
+				current = String::new();
+			} else {
+				current.push(char);
+			}
+		}
+		lines.push(current);
+	}
+	lines
 }
 
 fn read_file(path: &str) -> String {
@@ -16,5 +29,5 @@ fn read_file(path: &str) -> String {
 }
 
 fn main() {
-    println!("{}", a2_trebuchet::trebuchet(read_file("input/trebuchet.txt").as_str()));
+    println!("{}", b2::cubes(read_file("input/cubes.txt").as_str()));
 }

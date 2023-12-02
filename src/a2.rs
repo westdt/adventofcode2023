@@ -1,17 +1,7 @@
+#![allow(dead_code)]
+
 pub fn trebuchet(input: &str) -> i32 {
-	let mut lines = Vec::new();
-	{
-		let mut current = String::new();
-		for char in input.chars() {
-			if char == '\n' {
-				lines.push(current);
-				current = String::new();
-			} else {
-				current.push(char);
-			}
-		}
-		lines.push(current);
-	}
+	let lines = crate::str_to_lines(input);
 
 	let numbers = vec![
 		"one",
@@ -53,5 +43,5 @@ pub fn trebuchet(input: &str) -> i32 {
 		full_output.push('\n');
 	}
 
-	crate::a1_trebuchet::trebuchet(&full_output.as_str())
+	crate::a1::trebuchet(&full_output.as_str())
 }
