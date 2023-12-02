@@ -1,5 +1,19 @@
 pub fn trebuchet(input: &str) -> i32 {
-	let patterns: Vec<&str> = vec![
+	let mut lines = Vec::new();
+	{
+		let mut current = String::new();
+		for char in input.chars() {
+			if char == '\n' {
+				lines.push(current);
+				current = String::new();
+			} else {
+				current.push(char);
+			}
+		}
+		lines.push(current);
+	}
+
+	let numbers = vec![
 		"one",
 		"two",
 		"three",
@@ -11,61 +25,33 @@ pub fn trebuchet(input: &str) -> i32 {
 		"nine"
 	];
 
-	let mut substr = String::new();
-	let mut sum = 0;
-	let mut a = 0;
-	let mut b = 0;
-	for char in input.chars() {
-		if char == '\n' {
-			let join = format!("{}{}", a, b).as_str().parse::<i32>().unwrap();
-			sum += join;
-			println!("{} + {} = {} ... {}", a,b,join,sum);
-			a = 0;
-			b = 0;
-			substr = String::new();
-			continue;
-		}
-
-		let value = match &char.to_digit(10) {
-			Some(value) => {
-				substr = String::new();
-				*value
-			}
-			None => {
-				substr = format!("{}{}", substr, char);
-				let mut value: u32 = 0;
-				let mut valid = false;
-				let len = substr.len();
-				for i in 0..9 {
-					if len < patterns[i].len() {
-						if &substr.as_str() == &&(patterns[i][0..len]) {
-							valid = true;
-						}
-					}
-					if &substr.as_str() == &patterns[i] {
-						value = (i + 1) as u32;
+	let mut full_output = String::new();
+	for line in lines {
+		let mut output = String::new();
+		let strlen = line.len();
+		let mut matching;
+		let mut i = 0;
+		for char in line.chars() { 
+			matching = false;
+			for j in 0..9 {
+				let len = numbers[j].len();
+				if strlen >= i + len {
+					let substr = line.get(i..i + len).unwrap_or("");
+					if substr == numbers[j] {
+						matching = true;
+						output.push_str(format!("{}", j + 1).as_str());
+						break;
 					}
 				}
-				if !valid {
-					substr = String::new();
-				}
-				value
 			}
-		} as i32;
-
-		if value != 0 {
-			match a {
-				0 => {
-					a = value;
-					b = value;
-				}
-				_ => {
-					b = value;
-				}
+			if !matching {
+				output.push(char);
 			}
+			i += 1;
 		}
+		full_output.push_str(output.as_str());
+		full_output.push('\n');
 	}
 
-	sum += format!("{}{}", a, b).as_str().parse::<i32>().unwrap();
-	sum
+	crate::a1_trebuchet::trebuchet(&full_output.as_str())
 }

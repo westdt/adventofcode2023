@@ -1,28 +1,31 @@
 pub fn trebuchet(input: &str) -> i32 {
-	let result = input.chars().fold((0, 0, 0), | (s, a, b), char | {
+	let mut i = 1;
+	let result = input.chars().fold((0, 0, 0), | (sum, a, b), char | {
 		match char {
 			'\n' => {
-				(s + format!("{}{}", a, b).parse::<i32>().unwrap(), 0, 0)
+				println!("{}: {} + {}: {} ... {}", i, a, b, a * 10 + b, sum + a * 10 + b);
+				i += 1;
+				(sum + a * 10 + b, 0, 0)
 			}
 			_ => {
 				match char.to_digit(10) {
 					Some(value) => {
 						match a {
 							0 => {
-								(s, value, value)
+								(sum, value, value)
 							}
 							_ => {
-								(s, a, value)
+								(sum, a, value)
 							}
 						}
 					}
 					None => {
-						(s, a, b)
+						(sum, a, b)
 					}
 				}
 			}
 		}
 	});
 
-	result.0 + format!("{}{}", result.1, result.2).parse::<i32>().unwrap()
+	(result.0 + (result.1 * 10 + result.2)) as i32
 }
