@@ -1,10 +1,7 @@
 pub fn trebuchet(input: &str) -> i32 {
-	let mut i = 1;
 	let result = input.chars().fold((0, 0, 0), | (sum, a, b), char | {
 		match char {
 			'\n' => {
-				println!("{}: {} + {}: {} ... {}", i, a, b, a * 10 + b, sum + a * 10 + b);
-				i += 1;
 				(sum + a * 10 + b, 0, 0)
 			}
 			_ => {
