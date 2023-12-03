@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 pub fn trebuchet(input: &str) -> i32 {
-	let lines = crate::str_to_lines(input);
+	let lines = input.split('\n').collect::<Vec<_>>();
 
 	let numbers = vec![
 		"one",
